@@ -4,60 +4,88 @@
 **SPACE** is a smart web-based scheduling platform powered by **Umaru**, your personal AI assistant.  
 
 You can:  
-- 📝 **Manually add events** with title, date, time, and location  
-- 💬 **Chat with Umaru** to create and organize events automatically  
-- ⏰ **Set reminders** for upcoming events  
-- 🔍 **Search events or locations** through chat for quick planning  
+- **Manually add events** with title, date, time, and location  
+- **Chat with Umaru** to create and organize events automatically  
+- **Set reminders** for upcoming events  
+- **Search events or locations** through chat for quick planning  
 
-Whether you prefer full control or AI assistance, **SPACE** keeps your calendar organized, flexible, and stress-free.  
+Whether you prefer full control or AI assistance, **SPACE** keeps your calendar organized, flexible, and stress-free.
 
 ---
 
 ## 🧠 About SPACE  
-**SPACE (Smart Personal AI for Calendar & Events)** is designed to make web-based scheduling easy and intuitive. Instead of managing everything manually, users can interact with **Umaru**, the AI chat bubble, to quickly turn natural-language inputs into structured events with optional reminders.  
+**SPACE (Smart Personal AI for Calendar & Events)** is designed to make scheduling easy and intuitive on the web.  
 
-SPACE balances **manual control** and **AI assistance**, giving users flexibility while still benefiting from smart scheduling.  
+Users interact with **Umaru**, the AI chat bubble, to convert natural language into structured events. SPACE is not fully automated—it enhances user control by assisting with event creation, event search, and location selection.
 
 ---
 
 ## 💬 How It Works  
 1. User types a message in the **Umaru chat bubble**  
-   *(e.g., "Team meeting tomorrow at 3 PM in Manila with a 30-minute reminder")*  
-2. **Umaru AI analyzes the input**  
-3. Extracts key details:  
-   - 📌 **Title**  
-   - 📅 **Date**  
-   - ⏰ **Time**  
-   - 📍 **Location**  
-   - ⏳ **Reminder** (optional)  
-4. ✅ **Umaru creates the event** in SPACE, including the reminder  
-5. Users can also **manually create or edit events** and reminders at any time  
+   *(e.g., "School meeting tomorrow at 3PM near Catbalogan")*  
+
+2. **Umaru AI processes the input**  
+
+3. Extracts:
+   - 📌 Title  
+   - 📅 Date  
+   - ⏰ Time  
+   - 📍 Location (via OpenStreetMap / OpenStreetBrowser)  
+   - ⏳ Reminder (optional)  
+
+4. ✅ **Umaru creates the event or searches for events/locations**  
+
+5. Events can also be edited or created manually  
 
 ---
 
 ## ✨ Features  
 
-- 🌐 **Web-Based Platform** — Accessible through any modern browser  
-- 💬 **Umaru Chat Bubble** — Natural language input for fast event creation  
-- 🧠 **AI Event Processing** — Umaru interprets messages and creates structured events with reminders  
-- ✍️ **Manual Event Management** — Full control to add, edit, or delete events and reminders  
-- 🔍 **Event & Location Search** — Quickly find existing events or locations through chat  
-- ⏰ **Reminders & Notifications** — Get notified for upcoming events based on your preferred timing  
-- ⚡ **Flexible Scheduling** — Combine manual planning and AI assistance  
+- 🌐 **Web-Based Platform**  
+  Accessible via any modern browser  
+
+- 💬 **Umaru Chat Bubble**  
+  Natural language input for fast event creation and searching  
+
+- 🧠 **AI Event Processing**  
+  Converts chat into structured events with optional reminders  
+
+- ✍️ **Manual Event Control**  
+  Full control to create, edit, and manage events  
+
+- 🔍 **Event Search**  
+  Quickly find existing events  
+
+- 🗺️ **Location Search (Free)**  
+  Search and select approximate locations using OpenStreetMap / OpenStreetBrowser  
+
+- ⏰ **Reminders & Notifications**  
+  Never miss important events  
+
+---
+
+## 🛠️ Tech Stack  
+
+- 🎨 **Frontend:** HTML, CSS, JavaScript  
+- ⚙️ **Backend:** Node.js  
+- 🧠 **AI Processing:** Umaru (via OpenRouter API)  
+- 🗺️ **Maps:** OpenStreetMap / OpenStreetBrowser  
 
 ---
 
 ## 🎯 Purpose  
-SPACE is built to make scheduling **fast, intuitive, and reliable**.  
-By combining **user control** with **AI-powered assistance**, it ensures your calendar stays organized, events aren’t missed, and reminders keep you on track.  
+SPACE makes scheduling **simple, flexible, and intelligent** by combining:  
+- Manual event management  
+- AI-powered chat input for event creation & search  
+- Free, web-based map integration  
 
 ---
 
 ## 🔮 Future Plans  
-- 🔔 Customizable reminder settings  
-- 🌍 Location-based suggestions  
-- 🤖 Enhanced AI understanding for complex inputs  
-- 🔗 Integration with other web services  
+- 🔔 Advanced notification system  
+- 🌍 More accurate map integration (e.g., Google Maps)  
+- 🤖 Smarter AI understanding  
+- 🔗 API integrations (calendar sync, etc.)  
 
 ---
 
