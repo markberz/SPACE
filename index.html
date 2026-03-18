@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Document metadata -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="LOGO.ico">
+  <title>SPACE – Smart Personal AI for Calendar & Events</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Leaflet Map Library for OpenStreetMap integration -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="topbar" style="display:flex;justify-content:center;align-items:center;position:relative">
+    <h1 style="text-align:center;margin:0">SPACE</h1>
+
+    <!-- Header Action Buttons -->
+    <div style="display:flex;gap:10px;align-items:center;position:absolute;right:20px">
+      <button id="darkModeToggle" class="dark-toggle">🌙</button> <!-- Dark Mode Toggle -->
+      <button id="historyBtn" class="history-btn">History</button> <!-- View Past Events -->
+      <button id="chatBtn" class="chat-btn">💬</button> <!-- AI Chat Assistant (Umaru) -->
+    </div>
+  </header>
+
+  <!-- Main Application Container -->
+  <main class="wrap">
+    <!-- Left Sidebar: Schedule Input & Calendar Navigation -->
+    <aside class="sidebar">
+      <!-- Month Navigation Controls -->
+      <div class="month-nav">
+        <button id="prevMonth">◀</button>
+        <div id="monthLabel"></div>
+        <button id="nextMonth">▶</button>
+      </div>
+
+      <!-- Event Creation Form -->
+      <div class="add-form">
+        <h2>Add Schedule</h2>
+        <form id="eventForm">
+          <!-- Event Title Input -->
+          <label>Title<input name="title" required></label>
+          <!-- Event Date Picker -->
+          <label>Date<input type="date" name="date" required></label>
+          <!-- Event Time Picker -->
+          <label>Time<input type="time" name="time" required></label>
+          <!-- Location Picker with Map -->
+          <label>Place<input id="placeInput" name="place" placeholder="Click to select location..." readonly style="cursor:pointer"></label>
+          <!-- Map Preview for Selected Location -->
+          <div id="formMapPreview" style="width:100%;height:200px;margin-top:12px;border-radius:8px;overflow:hidden;display:none;border:1px solid var(--border)"></div>
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button type="submit" class="primary">Save</button>
+            <button type="button" id="clearBtn" class="btn-clear">Clear</button>
+          </div>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Main Calendar Grid -->
+    <section class="calendar">
+      <!-- Day Headers (Mon-Sun) -->
+      <div class="day-headers">
+        <div class="day-header">Mon</div>
+        <div class="day-header">Tue</div>
+        <div class="day-header">Wed</div>
+        <div class="day-header">Thu</div>
+        <div class="day-header">Fri</div>
+        <div class="day-header">Sat</div>
+        <div class="day-header">Sun</div>
+      </div>
+      <div id="calendarGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <!-- History Modal -->
+  <div id="historyModal" class="modal" aria-hidden="true">
+    <div class="modal-content history-modal-box" style="max-height:85vh;display:flex;flex-direction:column">
+      <div class="modal-header">
+        <h3>History</h3>
+        <button class="close-modal" id="closeHistory">✕</button>
+      </div>
+      <div class="history-tabs">
+        <button class="history-tab-btn active" data-tab="confirmed">✓ Confirmed</button>
+        <button class="history-tab-btn" data-tab="cancelled">✗ Cancelled</button>
+      </div>
+      <div style="flex:1;overflow-y:auto">
+        <div id="confirmedTab" class="history-tab-content active">
+          <div id="confirmedList" class="history-grid"></div>
+        </div>
+        <div id="cancelledTab" class="history-tab-content">
+          <div id="cancelledList" class="history-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Schedule Modal -->
+  <div id="viewScheduleModal" class="modal" aria-hidden="true">
+    <div class="modal-content schedule-box">
+      <div class="modal-header">
+        <h3 id="viewScheduleDate"></h3>
+        <button class="close-modal" id="closeViewSchedule">✕</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:15px;">
+        <div id="viewScheduleContent" class="schedule-list"></div>
+        <div id="viewScheduleMapContainer" style="display:none;">
+          <div style="font-weight:600;font-size:14px;color:var(--text);margin-bottom:8px;">📍 Location Map</div>
+          <div id="viewScheduleMap" style="width:100%;height:350px;border-radius:8px;overflow:hidden;border:1px solid var(--border)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schedule Notification Modal -->
+  <div id="notificationModal" class="modal" aria-hidden="true">
+    <div class="modal-content notification-box">
+      <div class="notification-header">🔔 Schedule Time</div>
+      <div id="notificationContent" class="notification-content"></div>
+      <div class="notification-actions">
+        <button id="confirmBtn" class="btn-confirm">Confirm</button>
+        <button id="cancelNotifyBtn" class="btn-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thank You Modal -->
+  <div id="thankYouModal" class="modal" aria-hidden="true">
+    <div class="modal-content thank-you-box">
+      <div class="thank-you-icon">✅</div>
+      <h2 style="margin:12px 0">Thank You!</h2>
+      <p id="thankYouMsg" style="margin:0;color:#6b7280;text-align:center">Wishing you luck with your schedule. </p>
+      <button id="closeThankYou" class="primary" style="margin-top:14px;width:100%">Done</button>
+    </div>
+  </div>
+
+  <!-- Map Picker Modal -->
+  <div id="mapModal" class="modal" aria-hidden="true">
+    <div class="modal-content map-box">
+      <div class="modal-header">
+        <h3>Select Location</h3>
+        <button class="close-modal" id="closeMap">✕</button>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:10px">
+        <input id="mapSearchInput" type="text" placeholder="Search location..." style="flex:1;padding:10px;border:1px solid var(--border);border-radius:4px">
+        <button id="mapSelectBtn" class="primary">Select</button>
+      </div>
+      <div id="mapContainer" style="width:100%;height:400px;border-radius:4px;overflow:hidden"></div>
+    </div>
+  </div>
+
+  <!-- AI Chat Bubble Modal -->
+  <div id="chatModal" class="chat-bubble-container" aria-hidden="true">
+    <div class="chat-bubble">
+      <div class="chat-header">
+        <div class="chat-header-content">
+          <img id="chatAvatar" src="Umaru.jpg" alt="AI Assistant" class="chat-avatar">
+          <h3>Umaru</h3>
+        </div>
+        <button id="closeChat" class="close-bubble">✕</button>
+      </div>
+      <div id="chatLog" class="chat-log"></div>
+      <div class="chat-input">
+        <input id="chatInput" placeholder="Ask me anything...">
+        <button id="voiceBtn" class="chat-voice-btn" title="Click to speak">🎤</button>
+        <button id="sendChat">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
